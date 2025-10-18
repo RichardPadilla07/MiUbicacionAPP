@@ -1,0 +1,49 @@
+.seguimiento-activo,
+.seguimiento-inactivo {
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.no-photos-message {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.photo-row {
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.photo-col {
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.photo-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.photo-thumbnail-square {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.text-col {
+  padding-left: 0.25rem;
+}
+
+.photo-info-item {
+  --padding-start: 0.25rem;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+}

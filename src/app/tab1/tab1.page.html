@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi Ubicación GPS (Standalone)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="latitude() !== null && longitude() !== null">
+    <ion-card-header>
+      <ion-card-title>
+        Coordenadas actuales
+        <ion-badge *ngIf="watchId !== null" color="success" class="seguimiento-activo">
+          ACTIVO
+        </ion-badge>
+        <ion-badge *ngIf="watchId === null" color="medium" class="seguimiento-inactivo">
+          DESACTIVADO
+        </ion-badge>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Latitud:</strong> {{ latitude() }}</p>
+      <p><strong>Longitud:</strong> {{ longitude() }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <p *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+  <ion-button expand="block" color="success" (click)="iniciarSeguimiento()" [disabled]="watchId !== null">
+    <ion-icon name="play-outline" slot="start"></ion-icon>
+    Iniciar seguimiento
+  </ion-button>
+
+  <ion-button expand="block" color="danger" (click)="detenerSeguimiento()" [disabled]="watchId === null">
+    <ion-icon name="stop-outline" slot="start"></ion-icon>
+    Detener seguimiento
+  </ion-button>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="mostrarUbicacionActual()">
+      <ion-icon name="planet-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-button expand="block" color="tertiary" (click)="verHistorial()">
+    <ion-icon name="save-outline" slot="start"></ion-icon>
+    {{ mostrarHistorial ? 'Ocultar Historial' : 'Ver Historial' }}
+  </ion-button>
+
+  <ion-card *ngIf="mostrarHistorial">
+    <ion-card-header>
+      <ion-card-title>
+        Historial de fotos con su ubicacion
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="fotosConUbicacion.length === 0" class="no-photos-message">
+        <ion-icon name="camera-outline" style="font-size: 3rem; color: #ccc;"></ion-icon>
+        <p>No hay fotos aun</p>
+        <p style="color: #666; font-size: 0.9rem;">Ve al Tab 2 para tomar fotos</p>
+      </div>
+
+      <ion-grid *ngIf="fotosConUbicacion.length > 0">
+        <ion-row *ngFor="let foto of fotosConUbicacion" class="photo-row">
+          <ion-col size="3" class="photo-col">
+            <div class="photo-container">
+              <ion-img [src]="foto.webviewPath" class="photo-thumbnail-square"></ion-img>
+            </div>
+          </ion-col>
+          <ion-col size="9" class="text-col">
+            <ion-item lines="none" class="photo-info-item">
+              <ion-label>
+                <p><strong>Latitud:</strong> {{ foto.latitude }}</p>
+                <p><strong>Longitud:</strong> {{ foto.longitude }}</p>
+                <ion-button fill="clear" size="small" color="primary" (click)="abrirEnGoogleMaps(foto)">
+                  <ion-icon name="navigate-circle-outline" slot="start"></ion-icon>
+                  Ver en Google Maps
+                </ion-button>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
