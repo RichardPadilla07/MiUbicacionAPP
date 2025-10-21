@@ -10,7 +10,7 @@ import { LocationService } from './location';
 export class PhotoService {
 
   public photos: UserPhoto[] = [];
-  private PHOTO_STORAGE: string = 'photos'; //toca aplicar una 'clave' para guardar 
+  private PHOTO_STORAGE: string = 'photos';
 
   constructor(private locationService: LocationService) { }
 
@@ -93,7 +93,6 @@ export class PhotoService {
     return await this.convertBlobToBase64(blob) as string;
   }
 
-  //ahora convertir un Blob a base64
   private convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = reject;
@@ -103,7 +102,6 @@ export class PhotoService {
     reader.readAsDataURL(blob);
   });
 
-  // Método para obtener las últimas fotos con ubicación
   public getPhotosWithLocation(limit: number = 3): UserPhoto[] {
     return this.photos
       .filter(photo => photo.latitude && photo.longitude)
